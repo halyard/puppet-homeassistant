@@ -28,7 +28,7 @@ class homeassistant (
       '--network=host',
       '--privileged',
       '-e TZ=Etc/UTC',
-      "-v ${datadir}/config:/config"
+      "-v ${datadir}/config:/config",
       "-v ${datadir}/certs:/ssl",
       '--device /dev/ttyUSB0:/dev/ttyUSB0',
       '--device /dev/ttyUSB1:/dev/ttyUSB1',
