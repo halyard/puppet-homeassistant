@@ -1,0 +1,16 @@
+{
+  "name": "halyard-homeassistant",
+  "version": "0.0.1",
+  "author": "Les Aker",
+  "license": "MIT",
+  "summary": "Configure homeassistant instance",
+  "source": "https://github.com/halyard/puppet-homeassistant",
+  "project_page": "https://github.com/halyard/puppet-homeassistant",
+  "issues_url": "https://github.com/halyard/puppet-homeassistant/issues",
+  "dependencies": [
+
+  ],
+  "operatingsystem_support": [
+
+  ]
+}
