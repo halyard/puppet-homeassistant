@@ -23,9 +23,9 @@ class homeassistant (
   }
 
   -> firewall { '100 allow inbound 443 to homeassistant':
-    dport    => 443,
-    proto    => 'tcp',
-    action   => 'accept',
+    dport  => 443,
+    proto  => 'tcp',
+    action => 'accept',
   }
 
   -> docker::container { 'homeassistant':
