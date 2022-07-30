@@ -22,6 +22,12 @@ class homeassistant (
     challengealias => $tls_challengealias,
   }
 
+  -> firewall { '100 allow inbound 443 to homeassistant':
+    dport    => 443,
+    proto    => 'tcp',
+    action   => 'accept',
+  }
+
   -> docker::container { 'homeassistant':
     image => 'ghcr.io/home-assistant/home-assistant:stable',
     args  => [
