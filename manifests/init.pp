@@ -29,9 +29,9 @@ class homeassistant (
   }
 
   -> docker::container { 'homeassistant':
-    image => 'ghcr.io/home-assistant/home-assistant:stable',
-    args  => [
-      '--network=host',
+    image   => 'ghcr.io/home-assistant/home-assistant:stable',
+    network => 'host',
+    args    => [
       '--privileged',
       '-e TZ=Etc/UTC',
       "-v ${datadir}/config:/config",
@@ -39,6 +39,6 @@ class homeassistant (
       '--device /dev/ttyUSB0:/dev/ttyUSB0',
       '--device /dev/ttyUSB1:/dev/ttyUSB1',
     ],
-    cmd   => '',
+    cmd     => '',
   }
 }
