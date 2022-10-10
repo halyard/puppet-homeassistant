@@ -2,15 +2,17 @@
 #
 # @param hostname sets the hostname for grafana
 # @param datadir sets where the data is persisted
+# @param dbdir sets the directory for sqlite storage
 # @param tls_account sets the TLS account config
 # @param tls_challengealias sets the alias for TLS cert
 class homeassistant (
   String $hostname,
   String $datadir,
+  String $dbdir,
   String $tls_account,
   Optional[String] $tls_challengealias = undef,
 ) {
-  file { ["${datadir}/config", "${datadir}/certs"]:
+  file { ["${datadir}/config", "${datadir}/certs", $dbdir]:
     ensure => directory,
   }
 
@@ -36,6 +38,7 @@ class homeassistant (
       '-e TZ=Etc/UTC',
       "-v ${datadir}/config:/config",
       "-v ${datadir}/certs:/ssl",
+      "-v ${dbdir}:/db"
       '--device /dev/ttyUSB0:/dev/ttyUSB0',
       '--device /dev/ttyUSB1:/dev/ttyUSB1',
     ],
