@@ -38,7 +38,7 @@ class homeassistant (
       '-e TZ=Etc/UTC',
       "-v ${datadir}/config:/config",
       "-v ${datadir}/certs:/ssl",
-      "-v ${dbdir}:/db"
+      "-v ${dbdir}:/db",
       '--device /dev/ttyUSB0:/dev/ttyUSB0',
       '--device /dev/ttyUSB1:/dev/ttyUSB1',
     ],
