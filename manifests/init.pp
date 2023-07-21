@@ -2,8 +2,9 @@
 #
 # @param hostname sets the hostname for grafana
 # @param datadir sets where the data is persisted
-# @param tls_account sets the TLS account config
-# @param tls_challengealias sets the alias for TLS cert
+# @param aws_access_key_id sets the AWS key to use for Route53 challenge
+# @param aws_secret_access_key sets the AWS secret key to use for the Route53 challenge
+# @param email sets the contact address for the certificate
 # @param backup_target sets the target repo for backups
 # @param backup_watchdog sets the watchdog URL to confirm backups are working
 # @param backup_password sets the encryption key for backup snapshots
@@ -12,24 +13,29 @@
 class homeassistant (
   String $hostname,
   String $datadir,
-  String $tls_account,
-  Optional[String] $tls_challengealias = undef,
+  String $aws_access_key_id,
+  String $aws_secret_access_key,
+  String $email,
   Optional[String] $backup_target = undef,
   Optional[String] $backup_watchdog = undef,
   Optional[String] $backup_password = undef,
   Optional[Hash[String, String]] $backup_environment = undef,
   Optional[String] $backup_rclone = undef,
 ) {
+  $hook_script =  "#!/usr/bin/env bash
+cp \$LEGO_CERT_PATH ${datadir}/certs/cert
+cp \$LEGO_CERT_KEY_PATH ${datadir}/certs/cert
+/usr/bin/systemctl restart container@homeassistant"
+
   file { [$datadir, "${datadir}/config", "${datadir}/certs"]:
     ensure => directory,
   }
 
   -> acme::certificate { $hostname:
-    reloadcmd      => '/usr/bin/systemctl restart container@homeassistant',
-    keypath        => "${datadir}/certs/key",
-    fullchainpath  => "${datadir}/certs/cert",
-    account        => $tls_account,
-    challengealias => $tls_challengealias,
+    hook_script           => $hook_script,
+    aws_access_key_id     => $aws_access_key_id,
+    aws_secret_access_key => $aws_secret_access_key,
+    email                 => $email,
   }
 
   -> firewall { '100 allow inbound 443 to homeassistant':
