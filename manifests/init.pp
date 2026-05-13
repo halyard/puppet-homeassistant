@@ -23,8 +23,8 @@ class homeassistant (
   Optional[String] $backup_rclone = undef,
 ) {
   $hook_script =  "#!/usr/bin/env bash
-cp \$LEGO_CERT_PATH ${datadir}/certs/cert
-cp \$LEGO_CERT_KEY_PATH ${datadir}/certs/key
+cp \$LEGO_HOOK_CERT_PATH ${datadir}/certs/cert
+cp \$LEGO_HOOK_CERT_KEY_PATH ${datadir}/certs/key
 /usr/bin/systemctl restart container@homeassistant"
 
   file { [$datadir, "${datadir}/config", "${datadir}/certs"]:
