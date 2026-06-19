@@ -5,6 +5,7 @@
 # @param aws_access_key_id sets the AWS key to use for Route53 challenge
 # @param aws_secret_access_key sets the AWS secret key to use for the Route53 challenge
 # @param email sets the contact address for the certificate
+# @param version sets the Home Assistant container version / tag to run
 # @param backup_target sets the target repo for backups
 # @param backup_watchdog sets the watchdog URL to confirm backups are working
 # @param backup_password sets the encryption key for backup snapshots
@@ -16,6 +17,7 @@ class homeassistant (
   String $aws_access_key_id,
   String $aws_secret_access_key,
   String $email,
+  Strign $version = 'stable',
   Optional[String] $backup_target = undef,
   Optional[String] $backup_watchdog = undef,
   Optional[String] $backup_password = undef,
@@ -45,7 +47,7 @@ cp \$LEGO_HOOK_CERT_KEY_PATH ${datadir}/certs/key
   }
 
   -> docker::container { 'homeassistant':
-    image   => 'ghcr.io/home-assistant/home-assistant:stable',
+    image   => "ghcr.io/home-assistant/home-assistant:${version}",
     network => 'host',
     args    => [
       '--privileged',
