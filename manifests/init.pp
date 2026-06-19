@@ -17,7 +17,7 @@ class homeassistant (
   String $aws_access_key_id,
   String $aws_secret_access_key,
   String $email,
-  Strign $version = 'stable',
+  String $version = 'stable',
   Optional[String] $backup_target = undef,
   Optional[String] $backup_watchdog = undef,
   Optional[String] $backup_password = undef,
